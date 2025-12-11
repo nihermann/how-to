@@ -31,7 +31,7 @@ if [[ ! -f "$EXP_FILE" ]]; then
     exit 1
 fi
 
-# Load RUN_CMDS (and optionally EXP_TIME_PER_WAVE, experiment_setup, etc.)
+# Load RUN_CMDS (and optionally EXP_TIME_PER_BATCH, experiment_setup, etc.)
 source "$EXP_FILE"
 
 if [[ -z "${RUN_CMDS+x}" ]]; then
