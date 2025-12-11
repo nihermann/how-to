@@ -32,7 +32,7 @@ The important bits here are to use `--exclusive` in the header of the file. Furt
 
 We submit this script via `sbatch run.sh`
 
-## Helpers
+## 🚀 Automized Optimal Experiment Allocation
 We can make our lifes easier I crafted the following helper scripts. Grouping runs manually seems tedious. The idea is that we define our run configurations in a single file and then use helpers to automatically dispatch all configurations in groups of four for optimal GPU usage. For higher parallelism and queuing speed we want to queue each batch of four runs as a separate `sbatch` with smaller time limits for faster queuing, opposed to a single `sbatch` that will execute batches sequentially. The following files implement this behaviour so we only have to think about how to configure our runs:
 - [`experiment.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/experiment.sh) is where we define our individual run configurations.
     - `experiment_setup()` is used to activate environments, create folders, etc., whatever has to be done to prepare for the subsequent run command.
@@ -61,9 +61,9 @@ vim batch.sh
 Find all default sbatch variables here and adapt them if needed, e.g. to select your uenv or docker container.
 #### 3. Submit with CLI time override (highest priority):
 ```{bash}
-./submit_batches.sh --time 0:15:00 experiment.sh
+./submit_batches.sh -t 0:15:00 experiment.sh
 ```
-This ignores `EXP_TIME_PER_WAVE` from [`experiment.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/experiment.sh) and the `#SBATCH -t` from [`batch.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/batch.sh).
+This ignores `EXP_TIME_PER_BATCH` from [`experiment.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/experiment.sh) and the `#SBATCH -t` from [`batch.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/batch.sh).
 #### 4. Or just use the experiment’s time:
 ```{bash}
 ./submit_batches.sh experiment.sh
@@ -71,5 +71,5 @@ This ignores `EXP_TIME_PER_WAVE` from [`experiment.sh`](https://github.com/niher
 
 #### 5. Optionally adjust wave size:
 ```{bash}
-./submit_batches.sh --wave-size 2 experiments_bunny.sh
+./submit_batches.sh --batch-size 2 experiment.sh
 ```
