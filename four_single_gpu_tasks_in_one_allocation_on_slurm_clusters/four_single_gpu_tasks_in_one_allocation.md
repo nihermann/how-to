@@ -43,7 +43,11 @@ We can make our lifes easier I crafted the following helper scripts. Grouping ru
 - [`submit_batches.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/submit_batches.sh) to allocate all experiments outlined in [`experiment.sh`](https://github.com/nihermann/how-to/blob/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/experiment.sh).
 
 ### Setup
-Copy all three files where you want to schedule your experiment from and run the following command once to make the bash file executable:
+Download all three files where you want to schedule your experiment from
+```{bash}
+wget https://raw.githubusercontent.com/nihermann/how-to/refs/heads/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/batch.sh https://raw.githubusercontent.com/nihermann/how-to/refs/heads/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/experiment.sh https://raw.githubusercontent.com/nihermann/how-to/refs/heads/main/four_single_gpu_tasks_in_one_allocation_on_slurm_clusters/submit_batches.sh
+```
+and run the following command to make the submit bash file executable:
 ```{bash}
 chmod +x submit_batches.sh
 ```
